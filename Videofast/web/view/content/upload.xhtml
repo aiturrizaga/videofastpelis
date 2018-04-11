@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="btnUpload"/>
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-12 channels">
+                        <h:form id="formUpload">
+                            <p:growl id="msg" showDetail="true"/>
+                            <div class="content-block">
+                                <div class="channels-content">
+                                    <h4 style="font-size: 30px">Enlazar nuevo video</h4>
+                                    <div class="clearfix"></div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="theme-section">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="cns-block">
+                                                            <div class="cns-info">
+                                                                <div class="container-fluid">
+                                                                    <div class="u-form" align="left">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtNom">Nombre</label>
+                                                                                    <p:inputText value="#{userController.usuario.nomVid}" class="form-control" id="txtNom" placeholder="Nombre del video" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido"/>
+                                                                                    <h:message for="txtNom" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtEstreno">Lanzamiento</label>
+                                                                                    <p:inputText value="#{userController.usuario.yearVid}" class="form-control" id="txtEstreno" placeholder="Ingrese fecha de estreno" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido"/>
+                                                                                    <h:message for="txtEstreno" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtDura">Duración</label>
+                                                                                    <p:inputText value="#{userController.usuario.duraVid}" class="form-control" id="txtDura" placeholder="Duración del video" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido"/>
+                                                                                    <h:message for="txtDura" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtDesc">Descripción</label>
+                                                                                    <p:inputTextarea value="#{userController.usuario.desVid}" class="form-control" id="txtDesc" placeholder="Descripción del video" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido"/>
+                                                                                    <h:message for="txtDesc" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtRuta">Ruta del video</label>
+                                                                                    <p:inputText value="#{userController.usuario.ubiVid}" class="form-control" id="txtRuta" placeholder="Ingrese la dirección del video" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido"/>
+                                                                                    <h:message for="txtRuta" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtPort">Portada</label>
+                                                                                    <p:inputText value="#{userController.usuario.portVid}" class="form-control" id="txtPort" placeholder="Ingrese la dirección de la imagen" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido"/>
+                                                                                    <h:message for="txtPort" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtCat">Categoría</label>
+                                                                                    <h:selectOneMenu value="#{userController.usuario.codCatVid}" class="form-control" id="txtCat" required="true" requiredMessage="Este campo es requerido" style="font-size: 0.7em">
+                                                                                        <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                                        <f:selectItems value="#{userController.lstCbCat}" var="cate" itemValue="#{cate.codCatVid}" itemLabel="#{cate.nomCatVid}"/>
+                                                                                    </h:selectOneMenu>
+                                                                                    <h:message for="txtCat" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtGen">Género</label>
+                                                                                    <h:selectOneMenu value="#{userController.usuario.codGenVid}" class="form-control" id="txtGen" required="true" requiredMessage="Este campo es requerido" style="font-size: 0.7em">
+                                                                                        <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                                        <f:selectItems value="#{userController.lstCbGen}" var="gene" itemValue="#{gene.codGenVid}" itemLabel="#{gene.nomGenVid}"/>
+                                                                                    </h:selectOneMenu>
+                                                                                    <h:message for="txtGen" style="color: red; border: none"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="u-area">
+                                                                        <p:commandButton value="Enlazar video" actionListener="#{userController.enlazarVideo()}"
+                                                                                         class="btn btn-primary u-btn btn-block" update="formUpload msg"
+                                                                                         style="height: 100%; text-shadow: none; box-shadow: none"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

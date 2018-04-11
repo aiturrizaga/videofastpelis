@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-12 channels">
+                        <p:growl id="msg" showDetail="true"/>
+                        <h:form id="formProfile">
+                            <!-- Popular Channels -->
+                            <div class="content-block">
+                                <div class="channels-content">
+                                    <h4>Mi Perfil</h4>
+                                    <div class="clearfix"></div>
+
+                                    <div class="row">
+                                        <h:panelGroup id="pgDtPer">
+                                            <div class="col-lg-6">
+                                                <h4>Datos Personales</h4>
+                                                <div class="clearfix"></div>
+                                                <div class="theme-section">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="cns-block">
+                                                                <div class="cns-info">
+                                                                    <div class="container-fluid">
+                                                                        <div class="u-form" align="left">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtName">Nombres</label>
+                                                                                        <p:inputText value="#{userController.usuario.nomPer}" class="form-control" id="txtName" placeholder="Nombres Completos" style="text-shadow: none" maxlength="30" required="true" requiredMessage="Campo obligatorio"/>
+                                                                                        <h:message for="txtName" style="color: red; border: none" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtApe">Apellidos</label>
+                                                                                        <p:inputText value="#{userController.usuario.apePer}" class="form-control" id="txtApe" placeholder="Ingrese sus apellidos" style="text-shadow: none" maxlength="50" required="true" requiredMessage="Campo obligatorio"/>
+                                                                                        <h:message for="txtApe" style="color: red; border: none" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtDni">DNI</label>
+                                                                                        <p:inputText value="#{userController.usuario.dniPer}" class="form-control" id="txtDni" placeholder="Ingrese su DNI" style="text-shadow: none" maxlength="8">
+                                                                                            <p:keyFilter regEx="/[\d]/"/>		
+                                                                                        </p:inputText>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtCel">Celular</label>
+                                                                                        <p:inputText value="#{userController.usuario.celPer}" class="form-control" id="txtCel" placeholder="Numero de celular" style="text-shadow: none" maxlength="9">
+                                                                                            <p:keyFilter regEx="/[\d]/"/>
+                                                                                        </p:inputText>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtMail">Email</label>
+                                                                                        <p:inputText value="#{userController.usuario.emailPer}" class="form-control" id="txtMail" placeholder="Ingrese su email" style="text-shadow: none"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="u-area">
+                                                                            <p:commandButton value="Actualizar Datos" actionListener="#{userController.updateUser()}"
+                                                                                             class="btn btn-primary u-btn btn-block" 
+                                                                                             style="height: 100%; text-shadow: none; box-shadow: none" update="pgDtPer msg"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h:panelGroup>
+
+                                        <div class="col-lg-6">
+                                            <h4>Datos de la cuenta</h4>
+                                            <div class="clearfix"></div>
+                                            <div class="theme-section">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="cns-block">
+                                                            <div class="cns-info">
+                                                                <div class="container-fluid">
+                                                                    <div class="u-form" align="left">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtUser">Usuario</label>
+                                                                                    <p:inputText value="#{userController.usuario.userPer}" class="form-control" id="txtUser" placeholder="Tu usuario" style="text-shadow: none" readonly="true"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <h:panelGroup id="pgChPass">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="cns-block">
+                                                                <div class="cns-info">
+                                                                    <div class="container-fluid">
+                                                                        <div class="u-form" align="left">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtPassAct">Contraseña Actual</label>
+                                                                                        <p:password value="#{userController.passAct}" class="form-control" id="txtPassAct"
+                                                                                                    placeholder="Ingresa tu contraseña" style="text-shadow: none"
+                                                                                                    required="true" requiredMessage="Ingrese la contraseña actual" maxlength="50"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtPassNew">Nueva Contraseña</label>
+                                                                                        <p:password value="#{userController.passNew}" class="form-control" id="txtPassNew"
+                                                                                                    placeholder="Ingresa la nueva contraseña" style="text-shadow: none"
+                                                                                                    match="txtPassNewRepeat" required="true" requiredMessage="Ingrese la nueva contraseña"
+                                                                                                    validatorMessage="Las contraseñas no coinciden" maxlength="50">
+                                                                                        </p:password>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="txtPassNewRepeat">Repite la Contraseña</label>
+                                                                                        <p:password class="form-control" id="txtPassNewRepeat" 
+                                                                                                    placeholder="Repita la nueva contraseña" style="text-shadow: none"
+                                                                                                    required="true" requiredMessage="Repita la nueva contraseña" maxlength="50"/>
+                                                                                        <p:messages id="mesage" closable="true" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="u-area">
+                                                                            <p:commandButton value="Cambiar Contraseña" class="btn btn-primary u-btn btn-block" 
+                                                                                             style="height: 100%; text-shadow: none; box-shadow: none"
+                                                                                             actionListener="#{userController.validarAndChangePassword()}" update="pgChPass mesage"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /Popular Channels -->
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

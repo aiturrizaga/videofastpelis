@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="content-block head-div">
+                            <div class="cb-header">
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-10 col-xs-8">
+                                        <ul class="list-inline">
+                                            <li><a class="color-active">Todos los videos</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--videolist-->
+                            <div class="cb-content">
+                                <div class="row">
+                                    <h:form>
+                                        <ui:repeat value="#{userController.lstMovies}" var="mov">
+                                            <div class="col-lg-3 col-sm-6 videoitem">
+                                                <div class="b-video">
+                                                    <div class="v-img">
+                                                        <p:remoteCommand name="addHistory" actionListener="#{userController.agregarHistorial()}"/>
+                                                        <p:remoteCommand name="listMovieSimilar" actionListener="#{userController.listarMovieSimilar()}"/>
+                                                        <p:commandLink action="video.xhtml?faces-redirect=true" oncomplete="addHistory();listMovieSimilar()">
+                                                            <img src="#{mov.portVid}" alt="portada del video"/>
+                                                            <f:setPropertyActionListener value="#{mov}" target="#{userController.videoSelected}"/>
+                                                        </p:commandLink>
+                                                        <div class="time">#{mov.duraVid}</div>
+                                                    </div>
+                                                    <div class="v-desc">
+                                                        <a>#{fn:substring(mov.nomVid,0,35)}</a>
+                                                    </div>
+                                                    <div class="v-views">
+                                                        #{mov.nomCatVid} <span class="v-percent"> #{mov.genero}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

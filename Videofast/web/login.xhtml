@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:nn="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" href="resources/images/favicon.png"/>
+
+        <title>VideoFast | Login</title>
+
+        <!-- Bootstrap core CSS -->
+        <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
+
+        <!-- Theme CSS -->
+        <link href="resources/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/font-circle-video.css" rel="stylesheet" type="text/css"/>
+
+        <!-- font-family: 'Hind', sans-serif; -->
+        <link href='https://fonts.googleapis.com/css?family=Hind:400,300,500,600,700|Hind+Guntur:300,400,500,700' rel='stylesheet' type='text/css'/>
+        <f:event type="preRenderView" listener="#{userController.securityLogin()}"/>
+    </h:head>
+
+    <h:body class="light">
+        <div class="container-fluid bg-image">
+            <div class="row">
+                <div class="login-wraper">
+                    <img src="resources/images/login.jpg" alt="fondo" class="hidden-sm hidden-xs"/>
+                    <div class="banner-text">
+                        <div class="line"></div>
+                        <div class="b-text">
+                            Las  <span style="color: #EA2C5A">mejores<br/></span> <span class="color-b1">p</span><span class="color-b2">e</span><span class="color-b3">li</span><span style="color: #EA2C5A">culas</span> estan en videofast.
+                        </div>
+                        <!--                        <div class="overtext">
+                                                    Mas de 1000 videos online
+                                                </div>-->
+                    </div>
+                    <div class="login-window">
+                        <div class="l-head">
+                            Bienvenido a VideoFast
+                        </div>
+                        <div class="l-form">
+                            <h:form id="formLogin">
+                                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" 
+                                          resizable="false" showHeader="false">
+                                    Cargando
+                                </p:dialog>
+
+                                <div class="form-group">
+                                    <label for="txtUsuario">Usuario o Email</label>
+                                    <h:inputText value="#{userController.usu}" id="txtUsuario" 
+                                                 class="form-control" style="height: 100%"
+                                                 required="true" requiredMessage="Ingrese el usuario"
+                                                 nn:placeholder="Ingrese su usuario o email"/>
+                                    <h:message for="txtUsuario" style="color: red; border: none"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtPassword">Contraseña</label>
+                                    <h:inputSecret value="#{userController.pwd}" class="form-control" 
+                                                   id="txtPassword" style="height: 100%" required="true" 
+                                                   requiredMessage="Ingrese la contraseña"
+                                                   nn:placeholder="Ingrese la contraseña"/>
+                                    <h:message for="txtPassword" style="color: red; border: none"/>
+                                    <h:messages id="msg" class="form-control" style="color: red; border: none; list-style: none" 
+                                                rendered="#{userController.msg}"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-7">
+                                        <p:commandButton value="Iniciar Sesión" class="btn btn-cv1" 
+                                                         actionListener="#{userController.inicioSession()}" 
+                                                         update="formLogin msg" 
+                                                         style="height: 100%; text-shadow: none; box-shadow: none"/>
+                                    </div>
+                                </div>
+                                <ui:remove>
+                                    <div class="row">
+                                        <div class="col-lg-12 forgottext">
+                                            <a href="#">Olvidé mi contraseña?</a>
+                                        </div>
+                                    </div>
+                                </ui:remove>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- footer -->
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container padding-def">
+                        <div class="col-lg-1  col-sm-2 col-xs-12 footer-logo">
+                            <a class="navbar-brand" href="login.xhtml"><img src="resources/images/logo_dark.png" alt="videofast" class="logo" /></a>
+                        </div>
+                        <div class="col-lg-7  col-sm-7 col-xs-12">
+                            <div class="f-links">
+                                <ul class="list-inline">
+                                    <li><a href="#">Acerca de</a></li>
+                                    <li><a href="#">Ayuda</a></li>
+                                </ul>
+                            </div>
+                            <div class="delimiter"></div>
+                            <div class="f-copy">
+                                <ul class="list-inline">
+                                    <li>Copyright 2018 <a href="javascript:void(0)">Servifast</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- /footer -->
+
+        <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
+    </h:body>
+</html>
+

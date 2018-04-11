@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formHistory">
+                    <div class="row">
+                        <div class="col-lg-12 v-history">
+
+                            <!-- History -->
+                            <div class="content-block">
+                                <div class="cb-header">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-xs-12 col-sm-6">
+                                            <ul class="list-inline">
+                                                <li><a href="#" class="color-active active">Tu Historial</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-4 col-xs-12 col-sm-6 h-clear">
+                                            <!--<a href="#"><i class="cvicon-cv-cancel"></i> Limpiar todo el historial</a>-->
+                                            <p:commandLink value="Limpiar todo el historial" actionListener="#{userController.eliminarTodoHistorial()}">
+                                                <i class="cvicon-cv-cancel"></i>
+                                            </p:commandLink>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="cb-content">
+
+                                    <!-- history video row -->
+                                    <ui:repeat value="#{userController.lstHistorial}" var="his">
+                                        <div class="row">
+                                            <div class="h-video">
+                                                <div class="col-lg-2 col-xs-12 col-sm-5">
+                                                    <div class="v-img">
+                                                        <p:commandLink action="video.xhtml?faces-redirect=true">
+                                                            <img src="#{his.portVid}" alt="img video"/>
+                                                            <f:setPropertyActionListener value="#{his}" target="#{userController.videoSelected}"/>
+                                                        </p:commandLink>
+                                                        <div class="time">#{his.duraVid}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-xs-10 col-sm-5">
+                                                    <div class="v-desc">
+                                                        <a>#{his.nomVid}</a>
+                                                    </div>
+                                                    <div class="v-views">
+                                                        Visto el #{his.fechaHis}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-xs-2 col-sm-2 h-clear-list">
+                                                    <p:remoteCommand name="deleteHist" actionListener="#{userController.eliminarHistorial()}" />
+                                                    <p:commandLink oncomplete="deleteHist()">
+                                                        <i class="cvicon-cv-cancel"></i>
+                                                        <f:setPropertyActionListener target="#{userController.historySelected}" value="#{his}"/>
+                                                    </p:commandLink>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="h-divider"></div>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                    <ui:remove>
+                                        <p:outputLabel value="#{userController.historySelected.codHis} #{userController.historySelected.codPerHis}"/>
+                                    </ui:remove>
+                                    <!-- ///history video row -->
+
+                                </div>
+                            </div>
+                            <!-- /History -->
+
+                            <ui:remove>
+                                <div class="loadmore">
+                                    <button class="btn btn-default h-btn">Cargar mas</button>
+                                </div>
+                            </ui:remove>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

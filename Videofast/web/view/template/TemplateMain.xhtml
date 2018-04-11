@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:nn="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" href="../../resources/images/favicon.png"/>
+
+        <title>VideoFast</title>
+
+        <!-- Bootstrap core CSS -->
+        <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
+
+        <!-- Theme CSS -->
+        <h:outputStylesheet library="css" name="style.css"/>
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../resources/css/font-circle-video.css" rel="stylesheet" type="text/css"/>
+
+        <!-- font-family: 'Hind', sans-serif; -->
+        <link href='https://fonts.googleapis.com/css?family=Hind:400,300,500,600,700|Hind+Guntur:300,400,500,700' rel='stylesheet' type='text/css'/>
+        <f:event type="preRenderView" listener="#{userController.securitySession()}"/>
+    </h:head>
+
+    <h:body class="single-video #{userController.usuario.stylePer}">
+
+        <ui:insert name="top">
+            <h:form id="formTop">
+                <div class="container-fluid">
+                    <div class="row">
+                        <p:commandLink actionListener="#{userController.cambiarStyleColor()}">
+                            <div class="btn-color-toggle">
+                                <img src="../../resources/images/icon_bulb_light.png" alt="light bulb"/>
+                            </div>
+                        </p:commandLink>
+                        <div class="navbar-container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-1 col-sm-2 col-xs-2">
+                                        <a class="navbar-brand" href="../content/home.xhtml"><img src="../../resources/images/logo_dark.png" alt="Videofast" class="logo" /></a>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-10 col-xs-10">
+                                        <ul class="list-inline menu">
+                                            <li class="pages color-active">
+                                                <a href="../content/home.xhtml">Home</a>
+
+                                            </li>
+                                            <li><a href="../content/categorias.xhtml">Categorias</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="visible-xs visible-sm clearfix"></div>
+                                    <div class="col-lg-6 col-sm-8 col-xs-12">
+                                        <div class="topsearch">
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="sizing-addon2"></span>
+                                                <p:inputText value="#{userController.busqueda}" placeholder="Buscar"
+                                                             style="width: 100%;text-shadow: none;height: 43px" nn:aria-describedby="sizing-addon2"
+                                                             styleClass="form-control"/>
+                                                <div class="input-group-btn">
+                                                    <p:commandButton  icon="fa fa-search" styleClass="btn btn-default" actionListener="#{userController.listarBusquedaVideos()}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="visible-xs clearfix"></div>
+                                    <div class="col-lg-2 col-sm-4  col-xs-8">
+                                        <!--                                        <div class="avatar pull-left">
+                                                                                    <img src="../../resources/images/avatar.png" alt="avatar" />
+                                                                                    <span class="status"></span>
+                                                                                </div>-->
+                                        <div class="selectuser pull-left">
+                                            <div class="btn-group pull-left dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    #{userController.usuario.userPer}
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <p:commandLink value="Mi Perfil" action="profile.xhtml?faces-redirect=true"/> 
+                                                    </li>
+                                                    <li>
+                                                        <p:commandLink value="Administrar" action="admin.xhtml?faces-redirect=true" rendered="#{userController.usuario.tipoPer == '1' or userController.usuario.tipoPer == '2'}"/> 
+                                                    </li>
+                                                    <li>
+                                                        <p:commandLink value="Cerrar Sesión" actionListener="#{userController.logoutSession()}" update="formTop"/>   
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <ui:insert name="btnUpload">
+                                    <div>
+                                        <h:commandLink action="upload.xhtml?faces-redirect=true" rendered="#{userController.usuario.tipoPer == '1'}">
+                                            <div class="upload-button">
+                                                <i class="cv cvicon-cv-upload-video"></i>
+                                            </div>
+                                        </h:commandLink>
+                                    </div>
+                                </ui:insert>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:insert>
+
+        <ui:insert name="goto">
+            <h:form id="formGoto">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="navbar-container2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-1 col-sm-2 col-xs-12">
+                                        <div class="goto">
+                                            Ir a:
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3  col-sm-10 col-xs-12">
+                                        <div class="h-icons">
+                                            <p:commandLink actionListener="#{userController.listarMiLista()}">
+                                                <i class="cv cvicon-cv-play-circle" data-toggle="tooltip" data-placement="top" title="Mi Lista"></i>
+                                            </p:commandLink>
+                                            <p:commandLink actionListener="#{userController.listarHistorial()}">
+                                                <i class="cv cvicon-cv-history" data-toggle="tooltip" data-placement="top" title="Historial"></i>
+                                            </p:commandLink>
+                                        </div>
+                                    </div>
+                                    <!--                                <div class="col-lg-7 col-sm-10 col-xs-12">
+                                                                        <div class="h-resume">
+                                                                            <div class="play-icon">
+                                                                                <a href="#"><i class="cv cvicon-cv-play"></i></a>
+                                                                            </div>
+                                                                            Resume:  <span class="color-default">Daredevil Season 2 : Episode 6 </span>
+                                                                        </div>
+                                                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:insert>
+
+        <div class="content-wrapper">
+            <div class="container">
+                <ui:insert name="content">
+                    
+                </ui:insert>
+            </div>
+        </div>
+
+        <ui:insert name="footer">
+            <footer>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="container padding-def">
+                            <div class="col-lg-1  col-sm-2 col-xs-12 footer-logo">
+                                <a class="navbar-brand" href="../content/home.xhtml"><img src="../../resources/images/logo_dark.png" alt="Videofast" class="logo" /></a>
+                            </div>
+                            <div class="col-lg-7  col-sm-7 col-xs-12">
+                                <div class="f-links">
+                                    <ul class="list-inline">
+                                        <li><a href="#">Acerca de</a></li>
+                                        <li><a href="#">Ayuda</a></li>
+                                    </ul>
+                                </div>
+                                <div class="delimiter"></div>
+                                <div class="f-copy">
+                                    <ul class="list-inline">
+                                        <li>Copyrights 2018 <a href="javascript:void(0)">Servifast</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </ui:insert>
+
+        <p:dialog widgetVar="jquery"></p:dialog>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
+        <script src="../../resources/js/custom.js" type="text/javascript"></script>
+    </h:body>
+
+</html>

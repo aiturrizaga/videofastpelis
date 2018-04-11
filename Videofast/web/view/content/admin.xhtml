@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-12 channels">
+                        <h:form id="formAdmin">
+                            <p:growl autoUpdate="true" id="msj" showDetail="true"/>
+                            <div class="content-block">
+                                <div class="channels-content">
+                                    <h4>Mis Usuarios</h4>
+                                    <p:commandButton value="Agregar usuarios" class="pull-right btn btn-primary" 
+                                                     style="text-shadow: none; box-shadow: none"
+                                                     oncomplete="PF('addUserDialog').show();"
+                                                     disabled="#{userController.btnAdd}" id="btnAddUs"/>
+                                    <div class="clearfix"></div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4>Lista de Usuarios</h4>
+
+                                            <p:commandButton value="Actualizar Lista" class="pull-left btn btn-success" update="tblUsers"
+                                                             style="text-shadow: none; box-shadow: none" actionListener="#{userController.listarUsersActivos()}" rendered="#{userController.usuario.tipoPer == '1'}"/>
+                                            <p:commandButton value="Refrescar Lista" class="pull-left btn btn-success" update="tblUsersProv"
+                                                             style="text-shadow: none; box-shadow: none" actionListener="#{userController.listarUsersActivosProv()}" rendered="#{userController.usuario.tipoPer == '2'}"/>
+                                            <div class="clearfix"></div>
+                                            <h:panelGroup id="pgTabla">
+                                                <!-- Tabla de usuarios del administrador -->
+                                                <p:dataTable value="#{userController.lstUsers}" var="user" id="tblUsers"
+                                                             rowStyleClass="#{user.estPerView == 'I' ? 'inhabilitado' : null} table table-bordered"
+                                                             reflow="true"
+                                                             emptyMessage="No se encontro ningún registro"
+                                                             filteredValue="#{userController.lstUsersFilter}"
+                                                             rendered="#{userController.usuario.tipoPer == '1'}"
+                                                             selection="#{userController.userAdmSelected}"
+                                                             selectionMode="single" rowKey="#{user.codPerView}">
+                                                    <p:column headerText="Nombres" filterBy="#{user.nomPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{user.nomPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Apellidos" filterBy="#{user.apePerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{user.apePerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="DNI" filterBy="#{user.dniPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{user.dniPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Email" filterBy="#{user.emailPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{user.emailPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Usuario" filterBy="#{user.userPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{user.userPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Celular" filterBy="#{user.celPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{user.celPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Creado por">
+                                                        <p:outputLabel value="#{user.createByView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Cant. User">
+                                                        <p:outputLabel value="#{user.cantUserView}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                                <p:contextMenu for="tblUsers">
+                                                    <p:menuitem value="Editar" icon="ui-icon-pencil" update="formEditAdm:editUserAdmDlg"
+                                                                oncomplete="PF('editUserAdmDialog').show()"/>
+                                                    <p:menuitem value="Habilitar" icon="ui-icon-circle-arrow-n"
+                                                                update="tblUsers"
+                                                                actionListener="#{userController.habilitarUserAdm()}"/>
+                                                    <p:menuitem value="Inhabilitar" icon="ui-icon-circle-arrow-s"
+                                                                update="tblUsers"
+                                                                actionListener="#{userController.inhabilitarUserAdm()}">
+                                                        <p:confirm header="Confirmar" message="Estas seguro de inhabilitar este usuario?" icon="ui-icon-alert" />
+                                                    </p:menuitem>
+                                                </p:contextMenu>
+                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="tblUsers"/>
+                                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                </p:confirmDialog>
+                                                <!-- End TablaAdm -->
+
+                                                <!-- Tabla de usuarios del proveedor -->
+                                                <p:dataTable value="#{userController.lstUsersprov}" var="usp" id="tblUsersProv"
+                                                             rowStyleClass="#{usp.estPerView == 'I' ? 'inhabilitado' : null} table table-bordered"
+                                                             reflow="true"
+                                                             filteredValue="#{userController.lstUsersProvFilter}"
+                                                             emptyMessage="No se encontro ningún registro"
+                                                             rendered="#{userController.usuario.tipoPer == '2'}"
+                                                             selection="#{userController.userProvSelected}"
+                                                             selectionMode="single" rowKey="#{usp.codPerView}">
+                                                    <p:column headerText="Nombres" filterBy="#{usp.nomPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{usp.nomPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Apellidos" filterBy="#{usp.apePerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{usp.apePerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="DNI" filterBy="#{usp.dniPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{usp.dniPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Email" filterBy="#{usp.emailPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{usp.emailPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Usuario" filterBy="#{usp.userPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{usp.userPerView}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Celular" filterBy="#{usp.celPerView}" filterMatchMode="contains">
+                                                        <p:outputLabel value="#{usp.celPerView}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                                <p:contextMenu for="tblUsersProv">
+                                                    <p:menuitem value="Editar" icon="ui-icon-pencil" update="formEdit:editUserDlg"
+                                                                oncomplete="PF('editUserDialog').show()"/>
+                                                    <p:menuitem value="Habilitar" icon="ui-icon-circle-arrow-n"
+                                                                update="tblUsersProv"
+                                                                actionListener="#{userController.habilitarUserProv()}"/>
+                                                    <p:menuitem value="Inhabilitar" icon="ui-icon-circle-arrow-s"
+                                                                update="tblUsersProv"
+                                                                actionListener="#{userController.inhabilitarUserProv()}">
+                                                        <p:confirm header="Confirmar" message="Estas seguro de inhabilitar este usuario?" icon="ui-icon-alert" />
+                                                    </p:menuitem>
+                                                </p:contextMenu>
+                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="tblUsersProv"/>
+                                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                </p:confirmDialog>
+                                                <!-- End TablaProv -->
+                                            </h:panelGroup>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+                <!-- Dialogo para agregar nuevos usuarios -->
+                <h:form id="formDialog">
+                    <p:dialog widgetVar="addUserDialog" id="addUserDlg" header="Nuevo Usuario" 
+                              modal="true" closeOnEscape="true" responsive="true"
+                              height="450">
+                        <h:panelGrid columns="1" cellpadding="2" id="pnlData" >
+                            <p:inputText value="#{userController.usuario.nomPerReg}" class="form-control" id="txtNom" placeholder="Nombres completos" style="text-shadow: none" required="true" maxlength="30"/>
+                            <br/>
+                            <p:inputText value="#{userController.usuario.apePerReg}" class="form-control" id="txtApe" placeholder="Apellidos completos" style="text-shadow: none" required="true" maxlength="50"/>
+                            <br/>
+                            <p:inputText value="#{userController.usuario.userPerReg}" class="form-control" id="txtUser" placeholder="Usuario" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido" maxlength="30"/>
+                            <br/>
+                            <p:password value="#{userController.usuario.passPerReg}" class="form-control" id="txtPass" placeholder="Contraseña" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido" match="txtPassRp" validatorMessage="Las contraseñas no coinciden" maxlength="50"/>
+                            <h:message for="txtPass" style="color: red; border: none"/>
+                            <br/>
+                            <p:password class="form-control" id="txtPassRp" placeholder="Repita la contraseña" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido" maxlength="50"/>
+                            <h:message for="txtPassRp" style="color: red; border: none"/>
+                            <br/>
+                            <p:selectOneMenu value="#{userController.usuario.tipoPerReg}" id="cbTipo" required="true" style="width: 100%" rendered="#{userController.usuario.tipoPer == '1'}">
+                                <f:selectItem itemLabel="Administrador" itemValue="1" />
+                                <f:selectItem itemLabel="Proveedor" itemValue="2"/>
+                                <f:selectItem itemLabel="Usuario" itemValue="3"/>
+                            </p:selectOneMenu>
+                            <br/>
+                            <p:inputNumber value="#{userController.usuario.cantUserReg}" minValue="0" maxValue="9000" 
+                                           placeholder="Cantidad de usuarios" style="text-shadow: none" rendered="#{userController.usuario.tipoPer == '1'}"/>
+                        </h:panelGrid>
+                        <p:separator/>
+                        <p:commandButton value="Agregar" icon="ui-icon-check" class="pull-left"
+                                         actionListener="#{userController.addUser()}"
+                                         oncomplete="handleSubmit(args,'addUserDialog');"
+                                         update="pnlData formAdmin:tblUsers formAdmin:tblUsersProv formAdmin:btnAddUs"/>
+                        <p:commandButton value="Cancelar"
+                                         icon="ui-icon-close" 
+                                         onclick="PF('addUserDialog').hide()"
+                                         immediate="true"/>
+                    </p:dialog>
+                </h:form>
+                <!-- End -->
+
+                <!-- Dialogo para actualizar usuarios del proveedor -->
+                <h:form id="formEdit">
+                    <p:dialog widgetVar="editUserDialog" id="editUserDlg"
+                              modal="true" closeOnEscape="true" responsive="true"
+                              header="Editar Usuario">
+                        <h:panelGrid columns="1" cellpadding="2" id="pnlEdit" >
+                            <p:inputText value="#{userController.userProvSelected.nomPerView}" class="form-control" id="txtNomedit" placeholder="Nombres completos" style="text-shadow: none" required="true" maxlength="30"/>
+                            <br/>
+                            <p:inputText value="#{userController.userProvSelected.apePerView}" class="form-control" id="txtApeedit" placeholder="Apellidos completos" style="text-shadow: none" required="true" maxlength="50"/>
+                            <br/>
+                            <p:inputText value="#{userController.userProvSelected.userPerView}" class="form-control" id="txtUseredit" placeholder="Usuario" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido" maxlength="30"/>
+
+                        </h:panelGrid>
+                        <p:commandButton value="Actualizar" icon="ui-icon-check"
+                                         oncomplete="handleSubmit(args,'editUserDialog');"
+                                         actionListener="#{userController.updateOtherUserProv()}"
+                                         update="formAdmin:tblUsersProv"/>
+                        <p:commandButton value="Cancelar"
+                                         icon="ui-icon-close" 
+                                         onclick="PF('editUserDialog').hide()"
+                                         immediate="true"/>
+                    </p:dialog>
+                </h:form>
+                <!-- End -->
+
+                <!-- Dialogo para actualizar usuarios del administrador -->
+                <h:form id="formEditAdm">
+                    <p:dialog widgetVar="editUserAdmDialog" id="editUserAdmDlg"
+                              modal="true" closeOnEscape="true" responsive="true"
+                              header="Editar Usuario">
+                        <h:panelGrid columns="1" cellpadding="2" id="pnlEditAdm" >
+                            <p:inputText value="#{userController.userAdmSelected.nomPerView}" class="form-control" id="txtNomeditAdm" placeholder="Nombres completos" style="text-shadow: none" required="true" maxlength="30"/>
+                            <br/>
+                            <p:inputText value="#{userController.userAdmSelected.apePerView}" class="form-control" id="txtApeeditAdm" placeholder="Apellidos completos" style="text-shadow: none" required="true" maxlength="50"/>
+                            <br/>
+                            <p:inputText value="#{userController.userAdmSelected.userPerView}" class="form-control" id="txtUsereditAdm" placeholder="Usuario" style="text-shadow: none" required="true" requiredMessage="Este campo es requerido" maxlength="30"/>
+                            <br/>
+                            <p:inputNumber value="#{userController.userAdmSelected.cantUserView}" minValue="0" maxValue="9000" 
+                                           placeholder="Cantidad de usuarios" style="text-shadow: none" />
+                        </h:panelGrid>
+                        <p:commandButton value="Actualizar" icon="ui-icon-check"
+                                         oncomplete="handleSubmit(args,'editUserAdmDialog');"
+                                         actionListener="#{userController.updateOtherUserAdm()}"
+                                         update="formAdmin:tblUsers"/>
+                        <p:commandButton value="Cancelar"
+                                         icon="ui-icon-close" 
+                                         onclick="PF('editUserAdmDialog').hide()"
+                                         immediate="true"/>
+                    </p:dialog>
+                </h:form>
+                <!-- End -->
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

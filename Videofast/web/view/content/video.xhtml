@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formSingleVideo">
+                    <p:growl showDetail="true" autoUpdate="true"/>
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-12 col-sm-12">
+                            <div class="sv-video">
+                                <iframe width="100%" height="480" src="https://www.rapidvideo.com/e/FPG8DVUGXZ" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen="true"></iframe>
+<!--                                <script src="http://jwpsrv.com/library/echLdpbKEeSi8w4AfQhyIQ.js" ></script>
+                                <script>jwplayer.key = "cbPZjCLEJ+O5oZl0AvaDQqyb50+ydDAD5kEqJuS10Zg=";</script>
+                                <div id="myElement">Cargando el reproductor...</div>
+                                <script type="text/javascript">
+                                    <iframe width="640" height="360" src="https://www.rapidvideo.com/e/FPG8DVUGXZ" frameborder="0" marginwidth=0 marginheight=0 scrolling=no allowfullscreen></iframe>var playerInstance = jwplayer("myElement")
+                                    playerInstance.setup({
+                                        file: "#{userController.videoSelected.ubiVid}",
+                                        image: "#{userController.videoSelected.imgVid}",
+                                        title: "#{userController.videoSelected.nomVid}",
+                                        width: "100%",
+                                        aspectratio: "16:9",
+                                        tracks: [{
+                                                file: "/assets/captions-en.vtt",
+                                                label: "Latino",
+                                                kind: "captions",
+                                                "default": true
+                                            }, {
+                                                file: "/assets/captions-fr.vtt",
+                                                kind: "captions",
+                                                label: "Subtitulado"
+                                            }]
+                                    });
+
+                                </script>-->
+                            </div>
+                            <h1>#{userController.videoSelected.nomVid}</h1>
+
+                            <div class="info">
+                                <div class="custom-tabs">
+                                    <div class="tabs-panel">
+                                        <a href="#" class="active" data-tab="tab-1">
+                                            <i class="cv cvicon-cv-about" data-toggle="tooltip" data-placement="top" title="Acerca de"></i>
+                                            <span>Acerca de</span>
+                                        </a>
+
+
+                                        <div class="acide-panel">
+                                            <p:poll interval="1" listener="#{userController.verificaMiLista()}" update="grVerifica"/>
+                                            <h:panelGroup id="grVerifica">
+                                                <p:commandLink value="◄ Agregar a Mi Lista"  actionListener="#{userController.agregarAmiLista()}"
+                                                               rendered="#{userController.verifica}" update="grVerifica"/>
+                                                <p:outputLabel value="✓ Estoy en tu lista" rendered="#{!userController.verifica}"/>
+                                            </h:panelGroup>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <!-- BEGIN tabs-content -->
+                                    <div class="tabs-content">
+                                        <!-- BEGIN tab-1 -->
+                                        <div class="tab-1">
+                                            <div>
+                                                <h4>Categoria :</h4>
+                                                <p>#{userController.videoSelected.nomCatVid}</p>
+
+                                                <h4>Descripción :</h4>
+                                                <p>#{userController.videoSelected.desVid}</p>
+
+                                                <div class="row date-lic">
+                                                    <div class="col-lg-6">
+                                                        <h4>Estrenado:</h4>
+                                                        <p>#{userController.videoSelected.yearVid}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 ta-r">
+                                                        <h4>Sugerido para:</h4>
+                                                        <p>#{userController.videoSelected.genero}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4>Game:</h4>
+                                                <p>Uncharted 4</p>
+                                                <a href="#">
+                                                    <img src="../../resources/images/tab-1-img-1.jpg" alt="image"/>
+                                                </a>
+                                                <a href="#" class="btn">Purchase</a>
+                                            </div>
+                                        </div>
+                                        <!-- END tab-1 -->
+                                    </div>
+                                    <!-- END tabs-content -->
+                                </div>
+
+                                <div class="adblock2">
+                                    <div class="img">
+                                        Google AdSense<br/>
+                                        728 x 90
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- right column -->
+                        <div class="col-lg-4 col-xs-12 col-sm-12">
+
+                            <!-- up next -->
+                            <div class="caption">
+                                <div class="left">
+                                    <a href="#">Otros videos</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="list">
+                                <p:poll interval="1" listener="#{userController.listarMovieSimilar()}" update="grRpt"/>
+                                <p:remoteCommand name="listMovieSimilar" actionListener="#{userController.listarMovieSimilar()}"/>
+                                <h:panelGroup id="grRpt">
+                                    <ui:repeat value="#{userController.lstMoviesSimilar}" var="ms">
+                                        <div class="h-video row">
+                                            <div class="col-lg-6 col-sm-6">
+                                                <div class="v-img">
+                                                    <p:commandLink action="video.xhtml?faces-redirect=true" oncomplete="listMovieSimilar()">
+                                                        <img src="#{ms.portVid}" alt="img video"/>
+                                                        <f:setPropertyActionListener value="#{ms}" target="#{userController.videoSelected}"/>
+                                                    </p:commandLink>
+                                                    <div class="time">#{ms.duraVid}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6">
+                                                <div class="v-desc">
+                                                    <a>#{ms.nomVid}</a>
+                                                </div>
+                                                <div class="v-percent"> #{ms.genero}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </ui:repeat>
+                                </h:panelGroup>
+                            </div>
+                            <!-- END up next -->
+
+                            <div class="adblock">
+                                <div class="img">
+                                    Google AdSense<br/>
+                                    336 x 280
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

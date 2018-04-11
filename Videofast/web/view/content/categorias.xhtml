@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-12 v-categories">
+
+                        <!-- Popular Channels -->
+                        <div class="content-block">
+                            <div class="cb-header">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <ul class="list-inline">
+                                            <li><a class="color-active" style="cursor: default">Todas las categorias</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cb-content">
+                                <div class="row">
+                                    <!-- 1-6 -->
+                                    <h:form>
+                                        <ui:repeat value="#{userController.lstCategoria}" var="cat">
+                                            <div class="col-lg-2 col-xs-6 col-sm-3">
+                                                <div class="b-category">
+                                                    <p:remoteCommand name="listaVidXCat" actionListener="#{userController.listaVideosXCat()}"/>
+                                                    <p:commandLink action="single-cat.xhtml?faces-redirect=true" oncomplete="listaVidXCat()">
+                                                        <img src="#{cat.imgCat}" alt="img categoria" style="width: 170px;height: 196px"/>
+                                                        <f:setPropertyActionListener value="#{cat}" target="#{userController.catgSelected}"/>
+                                                    </p:commandLink>
+                                                    <a class="name">#{cat.nomCat}</a>
+                                                    <!--<p class="desc">1235 Videos</p>-->
+                                                </div>
+
+                                            </div>
+                                            <ui:remove>
+                                                <p:outputLabel value="#{cat.codCat}"/>
+                                            </ui:remove>
+                                        </ui:repeat>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Popular Channels -->
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

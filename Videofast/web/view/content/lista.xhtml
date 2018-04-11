@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/TemplateMain.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formMiLista">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <!-- Featured Videos -->
+                            <div class="content-block">
+                                <div class="cb-header">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-xs-12 col-sm-6">
+                                            <div class="btn-group bg-clean">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Mi Lista (#) 
+                                                </button>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cb-content">
+                                    <div class="row">
+                                        <ui:repeat value="#{userController.lstMiLista}" var="list">
+                                            <div class=" col-lg-3 col-xs-6 videoitem">
+                                                <div class="b-video">
+                                                    <div class="v-img">
+                                                        <p:commandLink action="video.xhtml?faces-redirect=true">
+                                                            <img src="#{list.portVid}" alt="img video"/>
+                                                            <f:setPropertyActionListener value="#{list}" target="#{userController.videoSelected}"/>
+                                                        </p:commandLink>
+                                                        <div class="time">#{list.duraVid}</div>
+                                                    </div>
+                                                    <div class="v-desc">
+                                                        <a>#{list.nomVid}</a>
+                                                    </div>
+                                                    <div class="v-views">
+                                                        #{list.nomCatVid} <span class="v-percent"> #{list.genero}</span>
+                                                        <p:remoteCommand name="deleteMyList" actionListener="#{userController.eliminarMiLista()}" />
+                                                        <p:commandLink oncomplete="deleteMyList()" style="float: right">
+                                                            <i class="cvicon-cv-cancel" data-toggle="tooltip" title="Eliminar de Mi Lista"></i>
+                                                            <f:setPropertyActionListener target="#{userController.listaSelected}" value="#{list}"/>
+                                                        </p:commandLink>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
+                                        <ui:remove>
+                                            <p:outputLabel value="#{userController.listaSelected.codLis} #{userController.listaSelected.codPerLis}"/>
+                                        </ui:remove>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Featured Videos -->
+
+                            <ui:remove>
+                                <!-- pagination -->
+                                <div class="v-pagination">
+                                    <ul class="list-inline">
+                                        <li><a href="#">
+                                                <div class="pages"><i class="cv cvicon-cv-previous"></i></div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages">1</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages">2</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages active">3</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages">4</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages">5</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages">...</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages">10</div>
+                                            </a></li>
+                                        <li><a href="#">
+                                                <div class="pages"><i class="cv cvicon-cv-next"></i></div>
+                                            </a></li>
+                                    </ul>
+                                </div>
+                                <!-- /pagination -->
+                            </ui:remove>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
