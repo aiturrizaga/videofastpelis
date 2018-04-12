@@ -51,7 +51,7 @@
                                                 <a href="../content/home.xhtml">Home</a>
 
                                             </li>
-                                            <li><a href="../content/categorias.xhtml">Categorias</a></li>
+                                            <li><a href="../content/categorias.xhtml">Categorías</a></li>
                                         </ul>
                                     </div>
                                     <div class="visible-xs visible-sm clearfix"></div>
@@ -88,7 +88,7 @@
                                                         <p:commandLink value="Administrar" action="admin.xhtml?faces-redirect=true" rendered="#{userController.usuario.tipoPer == '1' or userController.usuario.tipoPer == '2'}"/> 
                                                     </li>
                                                     <li>
-                                                        <p:commandLink value="Cerrar Sesión" actionListener="#{userController.logoutSession()}" update="formTop"/>   
+                                                        <p:commandLink value="Cerrar Sesión" actionListener="#{userController.logoutSession()}" update="formTop" immediate="true"/>   
                                                     </li>
                                                 </ul>
                                             </div>
